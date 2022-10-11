@@ -32,5 +32,21 @@
       </tr>
     </table>
     
+    <div class="endgame" onclick="startGame()">
+      <h1 class="text">Game Running!</h1>
+      <h1>Click anywhere to restart.</h1>
+    </div>
+    
+    <div id="scores">
+      <span class="close" onclick="toggleScores()">&times;</span>
+      <h1>Scores</h1>
+      <div class="container">
+        <div>You: <span id="huWins">0</span></div>
+        <div>Draws: <span id="huAiTies">0</span></div>
+        <div>Computer: <span id="aiWins">0</span></div>
+      </div>
+    </div>
+    
+    <button id="scoresToggle" onclick="toggleScores()">Show Scores</button>
   </body>
 </html>
