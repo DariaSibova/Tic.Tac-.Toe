@@ -45,4 +45,63 @@ path {
   -webkit-animation-name: draw;
   animation-name: draw;
 }
+circle {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  stroke: #ff5e13; /*pink: #f62459*/
+}
+path {
+  -webkit-animation-duration: 0.25s;
+  animation-duration: 0.25s;
+  stroke: #d3d3d3; /*mint:; #36dbd7*/
+}
+
+.o {
+  -webkit-transform: rotateY(180deg) rotate(-35deg);
+  transform: rotateY(180deg) rotate(-35deg);
+}
+.x path:nth-of-type(2) {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+
+@-webkit-keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.endgame {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: rgba(41, 128, 185, 0.5);
+}
+
+.text {
+  font-size: 4em;
+}
+
+#scores {
+  position: absolute;
+  left: 0;
+  top: -400px;
+  width: 100%;
+  color: dodgerblue;
+  background-color: #fff;
+  padding: 16px;
+  align-content: center;
+  transition: 2s;
+}
 
