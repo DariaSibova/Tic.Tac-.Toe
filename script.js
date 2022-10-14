@@ -45,3 +45,70 @@ function ini() {
 
     document.getElementById("huWins").innerText = ticTacToeData.huWins;
     
+    document.getElementById("huAiTies").innerText = ticTacToeData.huAiTies;
+    document.getElementById("aiWins").innerText = ticTacToeData.aiWins;
+  }
+}
+
+function startGame() {
+  document.querySelector(".endgame").style.display = "none";
+  gameEnded = false;
+  shouldWin = Math.floor(Math.random() * winRatio.length);
+  turnFirst = turnFirst == "x" ? "o" : "x";
+  console.log(
+    "User Win Possible:",
+    winRatio[shouldWin] == "true" ? false : true
+  );
+  console.log("First Move:", turnFirst);
+  origBoard = Array.from(Array(9).keys());
+  for (var i = 0; i < cell.length; i++) {
+    cell[i].innerText = "";
+    cell[i].style.removeProperty("background-color");
+    cell[i].addEventListener("click", turnClick, false);
+  }
+  if (turnFirst === "o") {
+    removeGameClick();
+    if (!checkTie()) turn(bestSpot(), aiPlayer);
+    addGameClick();
+  }
+}
+
+function turnClick(square) {
+  if (typeof origBoard[square.target.id] === "number") {
+    turn(square.target.id, huPlayer);
+    setTimeout(function () {
+      if (!checkTie() && gameEnded == false) {
+        turn(bestSpot(), aiPlayer);
+      }
+      addGameClick();
+    }, 500);
+    //if (!checkTie()) turn(bestSpot(), aiPlayer);
+  }
+}
+
+function turn(squarId, _player) {
+  origBoard[squarId] = _player;
+  //document.getElementById(squarId).innerText = _player;
+  document.getElementById(squarId).innerHTML = _player;
+  removeGameClick();
+  let gameWon = checkWin(origBoard, _player);
+  if (gameWon) {
+    gameOver(gameWon);
+    gameEnded = true;
+  }
+}
+
+function checkWin(board, player) {
+  let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), []);
+  let gameWon = null;
+  for (let [index, win] of winCombo.entries()) {
+    if (win.every((elem) => plays.indexOf(elem) > -1)) {
+      gameWon = { index: index, player: player };
+      break;
+    }
+  }
+  return gameWon;
+}
+
+function gameOver(gameWon) {
+  for (let index of winCombo[gameWon.index]) {
