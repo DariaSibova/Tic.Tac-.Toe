@@ -112,3 +112,20 @@ function checkWin(board, player) {
 
 function gameOver(gameWon) {
   for (let index of winCombo[gameWon.index]) {
+
+    document.getElementById(index).style.backgroundColor =
+    gameWon.player == huPlayer ? "#4CAF50" : "#f44336";
+}
+if (gameWon.player == huPlayer) {
+  huWins++;
+} else {
+  aiWins++;
+}
+for (var i = 0; i < cell.length; i++) {
+  cell[i].removeEventListener("click", turnClick, false);
+}
+declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
+saveData();
+}
+
+function declareWinner(who) {
