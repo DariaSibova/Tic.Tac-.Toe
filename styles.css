@@ -112,3 +112,26 @@ path {
   cursor: pointer;
 }
 
+.show {
+  top: 0 !important;
+}
+
+#scores h1 {
+  text-align: center;
+}
+
+#scores div > div {
+  display: inline-block;
+}
+
+#scores > div {
+  text-align: justify;
+  width: 50%;
+  margin: auto;
+}
+#scores div:after {
+  display: inline-block;
+  width: 100%;
+  content: "";
+}
+
