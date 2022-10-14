@@ -104,4 +104,11 @@ path {
   align-content: center;
   transition: 2s;
 }
+#scores .close {
+  position: absolute;
+  top: 0;
+  right: 1em;
+  font-size: 3em;
+  cursor: pointer;
+}
 
