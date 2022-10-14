@@ -134,4 +134,13 @@ path {
   width: 100%;
   content: "";
 }
+button {
+  background-color: rgba(13, 76, 117, 0.5);
+  color: #efefef;
+  border-radius: 20px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
 
