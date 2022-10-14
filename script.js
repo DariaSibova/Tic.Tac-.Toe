@@ -261,3 +261,7 @@ function saveData() {
 
 function toggleScores() {
   if (document.getElementById("scores").classList.contains("show")) {
+
+    document.getElementById("scores").classList.remove("show");
+  } else {
+    
