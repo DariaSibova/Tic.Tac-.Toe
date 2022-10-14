@@ -264,4 +264,25 @@ function toggleScores() {
 
     document.getElementById("scores").classList.remove("show");
   } else {
-    
+    document.getElementById("scores").classList.add("show");
+  }
+}
+
+function isMobile() {
+  if (window.innerWidth < 775) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isTablet() {
+  if (window.innerWidth < 1024) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+window.addEventListener("resize", onResize);
+onResize();
