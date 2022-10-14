@@ -129,3 +129,135 @@ saveData();
 }
 
 function declareWinner(who) {
+
+  document.querySelector(".endgame").style.display = "block";
+  document.querySelector(".endgame .text").innerText = who;
+}
+
+function emptySquares() {
+  return origBoard.filter((s) => typeof s == "number");
+}
+
+function bestSpot() {
+  //return emptySquares()[0];
+  if (winRatio[shouldWin] === "true") {
+    console.log("Best move");
+    return minimax(origBoard, aiPlayer).index;
+  } else {
+    console.log("Random move");
+    return emptySquares()[Math.floor(Math.random() * emptySquares().length)];
+  }
+  return minimax(origBoard, aiPlayer).index;
+}
+
+function checkTie() {
+  if (emptySquares().length == 0) {
+    for (var i = 0; i < cell.length; i++) {
+      cell[i].style.backgroundColor = "#2980b9";
+      cell[i].removeEventListener("click", turnClick, false);
+    }
+    declareWinner("Draw!");
+    huAiTies++;
+    return true;
+  }
+  return false;
+}
+
+function removeGameClick() {
+  for (var i = 0; i < cell.length; i++) {
+    cell[i].removeEventListener("click", turnClick, false);
+  }
+}
+
+function addGameClick() {
+  for (var i = 0; i < cell.length; i++) {
+    cell[i].addEventListener("click", turnClick, false);
+  }
+}
+
+function minimax(newBoard, player) {
+  var availSpots = emptySquares();
+
+  if (checkWin(newBoard, huPlayer)) {
+    return { score: -10 };
+  } else if (checkWin(newBoard, aiPlayer)) {
+    return { score: 10 };
+  } else if (availSpots.length === 0) {
+    return { score: 0 };
+  }
+  var moves = [];
+  for (var i = 0; i < availSpots.length; i++) {
+    var move = {};
+    move.index = newBoard[availSpots[i]];
+    newBoard[availSpots[i]] = player;
+
+    if (player == aiPlayer) {
+      var result = minimax(newBoard, huPlayer);
+      move.score = result.score;
+    } else {
+      var result = minimax(newBoard, aiPlayer);
+      move.score = result.score;
+    }
+
+    newBoard[availSpots[i]] = move.index;
+
+    moves.push(move);
+  }
+
+  var bestMove;
+  if (player === aiPlayer) {
+    var bestScore = -10000;
+    for (var i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  } else {
+    var bestScore = 10000;
+    for (var i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  }
+
+  return moves[bestMove];
+}
+
+function onResize() {
+  var SW = window.innerWidth;
+  var td = document.querySelectorAll("td");
+  svgWidth = SW - 20;
+  svgHeight = SW - 21;
+  var boxSize;
+  if (isMobile()) {
+    boxSize = SW / 3.5 + "px";
+  } else if (isTablet()) {
+    boxSize = SW / 5 + "px";
+  } else {
+    boxSize = SW / 8 + "px";
+  }
+  for (var i = 0; i < td.length; i++) {
+    td[i].style.width = boxSize;
+    td[i].style.height = boxSize;
+  }
+}
+
+function saveData() {
+  document.getElementById("huWins").innerText = huWins;
+  document.getElementById("huAiTies").innerText = huAiTies;
+  document.getElementById("aiWins").innerText = aiWins;
+  ticTacToeData.huWins = huWins;
+  ticTacToeData.aiWins = aiWins;
+  ticTacToeData.huAiTies = huAiTies;
+  localStorage.setItem("tic-tac-toe-data", JSON.stringify(ticTacToeData));
+  console.log(
+    "Data Saved",
+    JSON.parse(localStorage.getItem("tic-tac-toe-data"))
+  );
+}
+
+function toggleScores() {
+  if (document.getElementById("scores").classList.contains("show")) {
